@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1068822098374",
+    "project_id": "save-eats-tcc2023",
+    "storage_bucket": "save-eats-tcc2023.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1068822098374:android:06548e06f1a7c1d19302c7",
+        "android_client_info": {
+          "package_name": "br.senai.sp.saveeats"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAP9xuVqn_LE1vW3RlN_XxaGidLXLg6vc4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
