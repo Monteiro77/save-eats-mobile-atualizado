@@ -63,4 +63,5 @@
     <string name="method_of_preparation">Method of preparation</string>
     <string name="ingredients">Ingredients</string>
     <string name="title_activity_tips_screen">TipsScreen</string>
+    <string name="details_orders">Order Details</string>
 </resources>

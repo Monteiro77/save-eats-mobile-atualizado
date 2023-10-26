@@ -4,6 +4,7 @@ import br.senai.sp.saveeats.service.CategoryRestaurantService
 import br.senai.sp.saveeats.service.CategoryService
 import br.senai.sp.saveeats.service.ClientService
 import br.senai.sp.saveeats.service.LoginService
+import br.senai.sp.saveeats.service.OrderService
 import br.senai.sp.saveeats.service.ProductsRestaurantService
 import br.senai.sp.saveeats.service.RecipesService
 import br.senai.sp.saveeats.service.RestaurantService
@@ -16,7 +17,7 @@ object RetrofitFactory {
 
     private const val baseURL = "http://192.168.100.164:8080/"
 
-    private const val baseURL2 = "http://10.107.144.32:8080/"
+    private const val baseURL2 = "http://10.107.144.32:9090/"
 
     private const val baseURL3 = "https://save-eats.cyclic.cloud/"
 
@@ -74,5 +75,9 @@ object RetrofitFactory {
 
     fun getHistoricoById(): ClientService{
         return  retrofitFactory.create(ClientService::class.java)
+    }
+
+    fun getOrderById(): OrderService{
+        return  retrofitFactory.create(OrderService::class.java)
     }
 }

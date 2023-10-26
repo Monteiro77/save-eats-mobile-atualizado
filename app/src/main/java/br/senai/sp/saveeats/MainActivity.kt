@@ -9,7 +9,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import br.senai.sp.saveeats.logincomponents.screen.LoginScreen
 import br.senai.sp.saveeats.menubarcomponents.screen.MenuScreen
-import br.senai.sp.saveeats.ordercomponents.screen.OrderScreen
+import br.senai.sp.saveeats.ordercomponents.DetailsOrderScreen
+import br.senai.sp.saveeats.ordercomponents.OrderScreen
 import br.senai.sp.saveeats.presentationcomponents.screen.FirstPresentationScreen
 import br.senai.sp.saveeats.presentationcomponents.screen.SecondPresentationScreen
 import br.senai.sp.saveeats.presentationcomponents.screen.ThirdPresentationScreen
@@ -75,7 +76,7 @@ class MainActivity : ComponentActivity() {
                         RecipeScreen(localStorage = Storage(), lifecycleScope)
                     }
                     composable("order_screen") {
-                        OrderScreen(localStorage = Storage(), navController = navController, navController2 = navController)
+                        DetailsOrderScreen(localStorage = Storage(), navController = navController)
                     }
 
                 }

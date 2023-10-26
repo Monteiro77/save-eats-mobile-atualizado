@@ -1,8 +1,6 @@
-package br.senai.sp.saveeats.ordercomponents.screen
+package br.senai.sp.saveeats.ordercomponents
 
-import android.content.Context
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,61 +35,61 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.saveeats.R
 import br.senai.sp.saveeats.Storage
+import br.senai.sp.saveeats.model.Historico
 import br.senai.sp.saveeats.model.HistoricoCliente
-import br.senai.sp.saveeats.model.OrderList
-import br.senai.sp.saveeats.model.ProductHistoricoList
 import br.senai.sp.saveeats.model.RetrofitFactory
 import coil.compose.AsyncImage
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import retrofit2.Call
 import retrofit2.Response
 
 @Composable
 fun OrderScreen(
-    navController: NavController,
     navController2: NavController,
     localStorage: Storage
 ) {
-    var context = LocalContext.current
 
-    var idClient = localStorage.readDataInt(context, "idClient")
+    val waitingAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.waiting_animation))
 
+    val verifierAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.verified_animation))
 
-    var listProducts by remember {
-        mutableStateOf(
-            listOf<ProductHistoricoList>()
-        )
-    }
+    val context = LocalContext.current
+
+    val idClient = localStorage.readDataInt(context, "idClient")
 
     var listOrders by remember {
         mutableStateOf(
-            listOf<OrderList>()
+            listOf<Historico>()
         )
     }
 
-    var callHistorico = RetrofitFactory
+    val callHistorico = RetrofitFactory
         .getHistoricoById()
-        .getHistoricoById(idClient)
-
+        .getHistoricoById(20)
 
     callHistorico.enqueue(object : retrofit2.Callback<HistoricoCliente> {
         override fun onResponse(
             call: Call<HistoricoCliente>,
             response: Response<HistoricoCliente>
         ) {
-            var listHistorico = response.body()?.detalhes_do_pedido_do_cliente?.get(0)
-
+            listOrders = response.body()!!.detalhes_do_pedido_do_cliente
+            Log.e("TESTE", "onResponse: $listOrders")
         }
 
         override fun onFailure(
             call: Call<HistoricoCliente>,
             t: Throwable
         ) {
-            Log.i("ds3t", "onFailure: ${t.message}")
+            Log.e("TESTE2", "onFailure: ${t.message}")
         }
 
     })
@@ -125,27 +123,23 @@ fun OrderScreen(
 
         LazyColumn(
             modifier = Modifier
-                .fillMaxWidth()
-                .padding(8.dp)
+                .fillMaxSize()
+                .padding(10.dp)
         ) {
-
 
             items(listOrders) {
 
-                Spacer(modifier = Modifier.height(25.dp))
-
-
-                Row() {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
                     Text(
-                        text = it.data_pedido.toString(),
-                        color = Color(104, 104, 104),
+                        text = it.data_pedido,
+                        color = Color(104, 104, 104)
                     )
-
                 }
 
-                Spacer(modifier = Modifier.height(10.dp))
-
-
+                Spacer(modifier = Modifier.height(4.dp))
 
                 Card(
                     modifier = Modifier
@@ -176,43 +170,52 @@ fun OrderScreen(
                         ) {
                             AsyncImage(
                                 model = it.foto_restaurante,
-                                contentDescription = "Imagem do Restuarnte",
-                                contentScale = ContentScale.Crop,
+                                contentDescription = "",
                                 modifier = Modifier
                                     .size(50.dp)
-                                    .clip(CircleShape)
+                                    .clip(CircleShape),
+                                contentScale = ContentScale.Crop
                             )
+
                             Spacer(modifier = Modifier.width(15.dp))
 
                             Text(
-                                text = it.nome_restaurante.toString(),
-                                fontSize = 20.sp
+                                text = it.nome_restaurante, fontSize = 20.sp
                             )
-                        }
-
-                        Spacer(modifier = Modifier.height(2.dp))
-
-                        Card(
-                            modifier = Modifier
-                                .width(270.dp)
-                                .height(1.5.dp),
-                            colors = CardDefaults.cardColors(
-                                Color(255, 141, 6)
-                            )
-                        ) {
 
                         }
 
                         Spacer(modifier = Modifier.height(6.dp))
 
-                        Row {
-                            if (it.status_pedido == "Pedido Concluído") {
-                                Icon(
-                                    painter = painterResource(id = R.drawable.baseline_verified_24),
-                                    contentDescription = "",
-                                    tint = Color(72, 138, 39),
-                                    modifier = Modifier.size(15.dp)
+                        Row(
+                            modifier = Modifier
+                                .height(2.dp)
+                                .width(300.dp)
+                                .background(Color(153, 153, 153, 180))
+                                .clip(CircleShape)
+
+                        ) {}
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+
+                            if (it.status_pedido == "Pedido Finalizado" || it.status_pedido == "Pedido entregue;" || it.status_pedido.length == 15) {
+
+                                LottieAnimation(
+                                    composition = verifierAnimation,
+                                    modifier = Modifier.size(20.dp),
+                                    iterations = LottieConstants.IterateForever
                                 )
+//
+//                                Icon(
+//                                    painter = painterResource(id = R.drawable.baseline_verified_24),
+//                                    contentDescription = "Entrega Concluída",
+//                                    tint = Color(25, 136, 25, 255),
+//                                    modifier = Modifier.size(12.dp)
+//                                )
 
                                 Spacer(modifier = Modifier.width(4.dp))
 
@@ -223,66 +226,76 @@ fun OrderScreen(
                                 )
 
                                 Text(
-                                    text = it.numero_pedido.toString(),
+                                    text = it.numero_pedido,
                                     color = Color(104, 104, 104),
                                     fontSize = 10.sp
                                 )
 
-                            }else{
+                            } else {
+
+
+                                LottieAnimation(
+                                    composition = waitingAnimation,
+                                    modifier = Modifier.size(25.dp),
+                                    iterations = LottieConstants.IterateForever
+                                )
+
+
                                 Text(
-                                    text = it.status_pedido.toString(),
+                                    text = it.status_pedido,
                                     color = Color(104, 104, 104),
                                     fontSize = 10.sp
                                 )
 
                                 Text(
-                                    text = it.numero_pedido.toString(),
+                                    text = it.numero_pedido,
                                     color = Color(104, 104, 104),
                                     fontSize = 10.sp
                                 )
+
+
                             }
                         }
 
-//                        Row() {
-//                            Icon(
-//                                painter = painterResource(id = R.drawable.baseline_verified_24),
-//                                contentDescription = "",
-//                                tint = Color(72, 138, 39),
-//                                modifier = Modifier.size(15.dp)
-//                            )
-//
-//                            Spacer(modifier = Modifier.width(4.dp))
-//
-//                            Text(
-//                                text = "Pedido concluído Nº 7800",
-//                                color = Color(104, 104, 104),
-//                                fontSize = 10.sp
-//                            )
-//                        }
-
-                        Spacer(modifier = Modifier.height(10.dp))
-
                         Button(
                             onClick = {
-                                navController2.navigate("detalhes_pedido_screen")
+                                      navController2.navigate("")
+                                localStorage.saveDataInt(context, it.id_pedido, "idOrder")
                             },
+                            modifier = Modifier
+                                .width(120.dp)
+                                .height(30.dp),
                             colors = ButtonDefaults.buttonColors(
-                                Color(72, 138, 39)
+                                Color(72,138,39)
                             )
                         ) {
-                            Text(
-                                text = "Detalhes do Pedido"
-                            )
+                            Row (
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ){
+                                Text(
+                                    text = stringResource(id = R.string.details_orders),
+                                    color = Color.White,
+                                    fontSize = 10.sp
+                                )
+                                
+                            }
+
                         }
+
 
                     }
                 }
-
-
             }
+
         }
+
     }
 
 }
+
+
 
 

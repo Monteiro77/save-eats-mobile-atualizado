@@ -9,7 +9,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import br.senai.sp.saveeats.Storage
 import br.senai.sp.saveeats.homecomponents.screen.HomeScreen
-import br.senai.sp.saveeats.ordercomponents.screen.OrderScreen
+import br.senai.sp.saveeats.ordercomponents.OrderScreen
 import br.senai.sp.saveeats.profilecomponents.screen.ProfileScreen
 import br.senai.sp.saveeats.recipecomponents.screen.RecipeScreen
 import br.senai.sp.saveeats.recipestipscomponents.screen.RecipesTipsScreen
@@ -33,7 +33,7 @@ fun BottomNavGraph(
         }
 
         composable(route = MenuBar.Orders.route) {
-            OrderScreen(navController, navController2, Storage())
+            OrderScreen( navController2, Storage())
         }
 
         composable(route = MenuBar.Recipes.route) {
