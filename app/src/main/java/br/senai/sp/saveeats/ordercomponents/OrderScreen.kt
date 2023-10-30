@@ -20,7 +20,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -34,7 +33,6 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -259,8 +257,13 @@ fun OrderScreen(
 
                         Button(
                             onClick = {
-                                      navController2.navigate("")
+                                      navController2.navigate("detalhes_pedido_screen")
                                 localStorage.saveDataInt(context, it.id_pedido, "idOrder")
+                                localStorage.saveDataString(context, it.foto_restaurante, "foto_restaurante")
+                                localStorage.saveDataString(context, it.estado_cliente, "estado_cliente")
+                                localStorage.saveDataString(context, it.bairro_cliente, "bairro_cliente")
+                                localStorage.saveDataString(context, it.cep_cliente, "cep_cliente")
+                                localStorage.saveDataString(context, it.cidade_cliente, "cidade_cliente")
                             },
                             modifier = Modifier
                                 .width(120.dp)
