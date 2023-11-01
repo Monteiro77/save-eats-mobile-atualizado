@@ -1,4 +1,4 @@
-package br.senai.sp.saveeats.ordercomponents
+package br.senai.sp.saveeats.historiccomponents
 
 import android.util.Log
 import androidx.compose.runtime.Composable
@@ -53,7 +53,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 @Composable
-fun DetailsOrderScreen(
+fun DetalhesPedidoHistoricoScreen(
     navController: NavController,
     localStorage: Storage
 ) {
@@ -193,7 +193,9 @@ fun DetailsOrderScreen(
                         color = Color(41, 95, 27),
                         modifier = Modifier
                             .clickable {
-                                navController.navigate("menu_screen")
+                                navController.navigate("products_restaurant_screen")
+                                localStorage.saveDataString(context, detalhesPedido[0].nome_restaurante, "nameRestaurant")
+
                             }
 
                     )
@@ -283,7 +285,9 @@ fun DetailsOrderScreen(
 
 
                         Column(
-                            modifier = Modifier.absoluteOffset(x = -45.dp)
+                            modifier = Modifier
+                                .width(250.dp),
+                            horizontalAlignment = Alignment.Start
                         ) {
 
                             Text(
@@ -337,7 +341,9 @@ fun DetailsOrderScreen(
 
 
 
-                    Text(text = detalhesPedido[0].valor_total.toString())
+                    Text(
+                        text = "R$ ${detalhesPedido[0].valor_total}"
+                    )
 
                 }
 
@@ -357,7 +363,7 @@ fun DetailsOrderScreen(
 
 
                     Text(
-                        text = detalhesPedido[0].valor_entrega,
+                        text = "R$ ${detalhesPedido[0].valor_entrega}",
                         color = Color(41, 95, 27)
                     )
 
@@ -378,10 +384,10 @@ fun DetailsOrderScreen(
                     )
 
                     Text(
-                        text = calculoTotal(
+                        text = "R$ ${calculoTotal(
                             detalhesPedido[0].valor_total,
                             detalhesPedido[0].valor_entrega.toFloat()
-                        ).toString()
+                        )}"
                     )
 
 

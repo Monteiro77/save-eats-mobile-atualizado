@@ -1,10 +1,6 @@
 package br.senai.sp.saveeats.productsrestaurantcomponents.screen
 
-import android.content.Intent
-import android.os.Bundle
 import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +20,6 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -43,71 +38,40 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.senai.sp.saveeats.R
 import br.senai.sp.saveeats.Storage
 import br.senai.sp.saveeats.model.ProductsRestaurant
 import br.senai.sp.saveeats.model.ProductsRestaurantList
 import br.senai.sp.saveeats.model.RetrofitFactory
-import br.senai.sp.saveeats.productcomponents.screen.ProductScreen
-import br.senai.sp.saveeats.ui.theme.SaveEatsTheme
 import coil.compose.AsyncImage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProductsRestaurantScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val getNameRestaurant = intent.getStringExtra("name_restaurant")
-
-        setContent {
-            SaveEatsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
-                ) {
-                    ProductsRestaurantScreen(
-                        getNameRestaurant.toString(),
-                        localStorage = Storage()
-                    )
-                }
-            }
-        }
-    }
-}
-
 @Composable
-fun ProductsRestaurantScreen(nameRestaurant: String, localStorage: Storage) {
+fun ProductsRestaurantScreen(navController: NavController, localStorage: Storage) {
 
-    var context = LocalContext.current
+    val context = LocalContext.current
 
-    var imageRestaurante = localStorage.readDataString(context, "imageRestaurant")
-
-    var nameCategoryRestaurant = localStorage.readDataString(context, "nameCategoryRestaurant")
+    val nameRestaurant = localStorage.readDataString(context, "nameRestaurant")
+    val imageRestaurant = localStorage.readDataString(context, "imageRestaurant")
+    val nameCategoryRestaurant = localStorage.readDataString(context, "nameCategoryRestaurant")
 
     var listProductsRestaurant by remember {
         mutableStateOf(listOf<ProductsRestaurant>())
     }
 
-    //cria uma chamada para o endpoint
-    var callProductsRestaurant = RetrofitFactory
+    val callProductsRestaurant = RetrofitFactory
         .getProductsRestaurant()
-        .getProductsRestaurant(nameRestaurant)
+        .getProductsRestaurant(nameRestaurant!!)
 
     callProductsRestaurant.enqueue(object : Callback<ProductsRestaurantList> {
         override fun onResponse(
             call: Call<ProductsRestaurantList>,
             response: Response<ProductsRestaurantList>
         ) {
-
-//            if (response.body()!!. == 404) {
-//                listProductsRestaurant = emptyList()
-//            } else {
-//                listProductsRestaurant = response.body()!!.produtos_do_restaurante
-//            }
-
+            listProductsRestaurant = response.body()!!.produtos_do_restaurante
         }
 
         override fun onFailure(
@@ -120,6 +84,14 @@ fun ProductsRestaurantScreen(nameRestaurant: String, localStorage: Storage) {
         }
 
     })
+
+    Surface (
+        modifier = Modifier
+            .fillMaxSize(),
+        color = colorResource(id = R.color.white)
+    ) {
+
+    }
 
     Column(
         modifier = Modifier
@@ -138,7 +110,7 @@ fun ProductsRestaurantScreen(nameRestaurant: String, localStorage: Storage) {
                 modifier = Modifier
                     .clip(CircleShape)
                     .size(60.dp),
-                model = imageRestaurante,
+                model = imageRestaurant,
                 contentDescription = "Image Background"
             )
 
@@ -163,10 +135,13 @@ fun ProductsRestaurantScreen(nameRestaurant: String, localStorage: Storage) {
                 )
 
                 Text(
-                    text = "Resutant profile",
+                    text = "Restaurant profile",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W600,
-                    color = Color(41, 95, 27)
+                    color = Color(41, 95, 27),
+                    modifier = Modifier.clickable {
+                        navController.navigate("profile_restaurant")
+                    }
                 )
 
             }
@@ -226,12 +201,12 @@ fun ProductsRestaurantScreen(nameRestaurant: String, localStorage: Storage) {
                     modifier = Modifier
                         .height(110.dp)
                         .clickable {
-                            var openProduct = Intent(context, ProductScreen::class.java)
-                            openProduct.putExtra("imageProduct", it.imagem)
-                            openProduct.putExtra("nameProduct", it.nome)
-                            openProduct.putExtra("priceProduct", it.preco)
-                            openProduct.putExtra("descriptionProduct", it.descricao)
-                            context.startActivity(openProduct)
+                            localStorage.saveDataInt(context, it.id, "idProduct")
+                            localStorage.saveDataString(context, it.imagem, "imageProduct")
+                            localStorage.saveDataString(context, it.nome, "nameProduct")
+                            localStorage.saveDataFloat(context, it.preco, "priceProduct")
+                            localStorage.saveDataString(context, it.descricao, "descriptionProduct")
+                            navController.navigate("products_screen")
                         },
                     colors = CardDefaults.cardColors(colorResource(id = R.color.white))
                 ) {

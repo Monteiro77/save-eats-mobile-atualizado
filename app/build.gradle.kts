@@ -1,7 +1,6 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
 }
 
 android {
@@ -130,20 +129,6 @@ dependencies {
 
     //importe das depencia do lottie
     implementation ("com.airbnb.android:lottie-compose:6.0.0")
-
-    //Google Services
-    implementation ("com.google.android.gms:play-services-auth:20.4.1")
-
-
-    // Firebase Service
-
-    implementation("com.google.firebase:firebase-auth-ktx:22.1.2")
-    implementation ("androidx.compose.material3:material3:x.y.z")
-
-    //Lifecycle viewmodel
-
-    implementation ("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.0")
-    implementation ("androidx.lifecycle:lifecycle-runtime-compose:2.6.0")
 
 
 }

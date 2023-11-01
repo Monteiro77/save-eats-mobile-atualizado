@@ -2,7 +2,6 @@ package br.senai.sp.saveeats.singupcomponents.screen
 
 import android.widget.Toast
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.scrollable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,12 +16,12 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Surface
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Numbers
 import androidx.compose.material3.ShapeDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -35,6 +34,7 @@ import androidx.compose.ui.focus.FocusDirection
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalFocusManager
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -51,9 +51,9 @@ import br.senai.sp.saveeats.components.InputOutlineTextField
 @Composable
 fun SecondSignup(navController: NavController, localStorage: Storage) {
 
-    var context = LocalContext.current
-    var focusManager = LocalFocusManager.current
-    var scrollState = rememberScrollState()
+    val context = LocalContext.current
+    val focusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
     var cep by rememberSaveable { mutableStateOf("") }
     var state by rememberSaveable { mutableStateOf("") }
@@ -96,8 +96,10 @@ fun SecondSignup(navController: NavController, localStorage: Storage) {
 
     }
 
-    androidx.compose.material3.Surface(
-        modifier = Modifier.fillMaxSize()
+    Surface(
+        modifier = Modifier
+            .fillMaxSize(),
+        color = colorResource(id = R.color.white)
     ) {
 
         Column(
@@ -119,7 +121,7 @@ fun SecondSignup(navController: NavController, localStorage: Storage) {
                             .size(200.dp)
                             .offset(x = -(185).dp, y = -(155).dp),
                         painter = painterResource(id = R.drawable.prato),
-                        contentDescription = "Prato de comida"
+                        contentDescription = "Plate of Food"
                     )
 
                     Image(
@@ -166,7 +168,7 @@ fun SecondSignup(navController: NavController, localStorage: Storage) {
                             .size(250.dp)
                             .offset(x = -(200).dp, y = 40.dp),
                         painter = painterResource(id = R.drawable.hamburguer),
-                        contentDescription = "Hamburguer"
+                        contentDescription = "Hamburger"
                     )
 
                     Image(
@@ -174,7 +176,7 @@ fun SecondSignup(navController: NavController, localStorage: Storage) {
                             .size(280.dp)
                             .offset(x = 160.dp, y = -(180).dp),
                         painter = painterResource(id = R.drawable.pao),
-                        contentDescription = "Pão"
+                        contentDescription = "Bread"
                     )
 
                     Spacer(modifier = Modifier.height(25.dp))

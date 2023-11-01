@@ -1,9 +1,5 @@
 package br.senai.sp.saveeats.productcomponents.screen
 
-import android.os.Bundle
-import android.util.Log
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -14,9 +10,7 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ButtonDefaults
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -25,57 +19,39 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import br.senai.sp.saveeats.R
-import br.senai.sp.saveeats.components.CustomButton
-import br.senai.sp.saveeats.ui.theme.SaveEatsTheme
+import br.senai.sp.saveeats.Storage
 import coil.compose.AsyncImage
-
-class ProductScreen : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        var getImageProduct = intent.getStringExtra("imageProduct")
-
-        var getNameProduct = intent.getStringExtra("nameProduct")
-
-        var getDescriptionProduct = intent.getStringExtra("descriptionProduct")
-
-        var getPriceProduct = intent.getFloatExtra("priceProduct", 0.0F)
-
-        Log.e("TESTE", "onCreate: $getPriceProduct")
-
-        setContent {
-            SaveEatsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = Color.White
-                ) {
-                    ProductScreen(
-                        getImageProduct.toString(),
-                        getNameProduct.toString(),
-                        getDescriptionProduct.toString(),
-                        getPriceProduct.toString()
-                    )
-                }
-            }
-        }
-    }
-}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProductScreen(
-    imageProduct: String,
-    nameProduct: String,
-    descriptionProduct: String,
-    priceProduct: String
+    navController: NavController,
+    localStorage: Storage,
 ) {
+
+    val context = LocalContext.current
+
+    val idProduct = localStorage.readDataInt(context, "idProduct")
+    val imageProduct = localStorage.readDataString(context, "imageProduct")
+    val nameProduct = localStorage.readDataString(context, "nameProduct")
+    val priceProduct = localStorage.readDataFloat(context, "priceProduct")
+    val descriptionProduct = localStorage.readDataString(context, "descriptionProduct")
+
+    Surface (
+        modifier = Modifier
+            .fillMaxSize(),
+        color = colorResource(id = R.color.white)
+    ) {
+
+    }
 
     Column(
         modifier = Modifier
@@ -118,20 +94,20 @@ fun ProductScreen(
                 ) {
 
                     Text(
-                        text = nameProduct,
+                        text = nameProduct!!,
                         fontSize = 20.sp,
                         fontWeight = FontWeight.W400,
                         letterSpacing = 2.sp
                     )
 
                     Text(
-                        text = descriptionProduct,
+                        text = descriptionProduct!!,
                         fontSize = 18.sp,
                         fontWeight = FontWeight.W300
                     )
 
                     Text(
-                        text = "A partir de R$ $priceProduct",
+                        text = "from R$ $priceProduct",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.W500,
                         letterSpacing = 2.sp,
@@ -178,7 +154,13 @@ fun ProductScreen(
             ) {
 
                 androidx.compose.material.Button(
-                    onClick = { /*TODO*/ },
+                    onClick = {
+                        localStorage.readDataString(context, "imageProduct")
+                        localStorage.readDataString(context, "nameProduct")
+                        localStorage.readDataFloat(context, "priceProduct")
+                        localStorage.readDataString(context, "descriptionProduct")
+                        navController.navigate("shopping_cart_screen")
+                    },
                     modifier = Modifier
                         .width(255.dp)
                         .height(55.dp),

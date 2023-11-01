@@ -1,7 +1,5 @@
 <resources>
     <string name="app_name">Save Eats</string>
-    <string name="title_activity_login_screen">LoginScreen</string>
-    <string name="title_activity_login">LoginActivity</string>
     <string name="welcome">Welcome</string>
     <string name="enter_account">Enter into your account</string>
     <string name="email">Email</string>
@@ -27,7 +25,6 @@
     <string name="welcome_text_1">Join this sustainable movement that fights food waste by redeeming fresh produce from restaurants, bakeries and fruit and vegetable shops with discounts of up to 70%.</string>
     <string name="welcome_text_2">Discover a variety of recipes and tips to preserve and reuse your food in a creative way.</string>
     <string name="welcome_text_3">Join us as a partner and help fight food waste.</string>
-    <string name="title_activity_splash" translatable="false">SplashActivity</string>
     <string name="categories">Categories</string>
     <string name="restaurant">Restaurants</string>
     <string name="slide_one">Enjoy discounts of up to 70% and buy quality food!</string>
@@ -50,18 +47,22 @@
     <string name="next">Next</string>
     <string name="recipes">Recipes</string>
     <string name="tips">Tips</string>
-    <string name="title_activity_teste">teste</string>
-    <string name="title_activity_main2">MainActivity2</string>
-    <string name="title_activity_category_restaurants_screen">CategoryRestaurantsScreen</string>
-    <string name="title_activity_category_restaurant_screen">CategoryRestaurantScreen</string>
-    <string name="title_activity_product_screen">ProductScreen</string>
     <string name="any_observations">Any observations?</string>
     <string name="add_to_cart">add to cart</string>
     <string name="recipes_and_tips">Recipes and Tips</string>
-    <string name="title_activity_recipe_screen">RecipeScreen</string>
     <string name="description">Description</string>
     <string name="method_of_preparation">Method of preparation</string>
     <string name="ingredients">Ingredients</string>
-    <string name="title_activity_tips_screen">TipsScreen</string>
+    <string name="shopping_cart">Shopping Cart</string>
+    <string name="summary_of_values">Summary of Values</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="delivery_fee">Delivery fee</string>
+    <string name="total">Total</string>
+    <string name="delivery_address">Delivery address</string>
+    <string name="standard_delivery">Standard delivery</string>
+    <string name="today">Today</string>
+    <string name="payment_methods">Payment methods</string>
+    <string name="make_a_wish">Make a wish</string>
+    <string name="to_replace">To replace</string>
     <string name="details_orders">Order Details</string>
 </resources>

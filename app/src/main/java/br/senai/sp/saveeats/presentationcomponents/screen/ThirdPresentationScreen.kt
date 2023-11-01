@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -45,7 +46,8 @@ fun ThirdPresentationScreen(navController: NavController) {
 
     Surface (
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = colorResource(id = R.color.white)
     ) {
 
         Column (
@@ -129,7 +131,7 @@ fun ThirdPresentationScreen(navController: NavController) {
                 )
 
                 CustomButton(
-                    onClick = { navController.navigate("signup_screen") },
+                    onClick = { navController.navigate("first_signup_screen") },
                     text = stringResource(id = R.string.signup)
                 )
 

@@ -24,10 +24,6 @@ fun SplashScreen(navController: NavHostController) {
         Animatable(0f)
     }
 
-    val rotation = remember {
-        Animatable(0f)
-    }
-
     LaunchedEffect(key1 = true) {
 
         scale.animateTo(

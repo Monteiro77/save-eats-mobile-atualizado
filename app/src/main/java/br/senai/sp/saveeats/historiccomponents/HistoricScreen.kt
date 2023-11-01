@@ -1,4 +1,5 @@
-package br.senai.sp.saveeats.ordercomponents
+package br.senai.sp.saveeats.historiccomponents
+
 
 import android.util.Log
 import androidx.compose.foundation.background
@@ -51,7 +52,7 @@ import retrofit2.Call
 import retrofit2.Response
 
 @Composable
-fun OrderScreen(
+fun HistoricScreen(
     navController2: NavController,
     localStorage: Storage
 ) {
@@ -257,7 +258,8 @@ fun OrderScreen(
 
                         Button(
                             onClick = {
-                                      navController2.navigate("detalhes_pedido_screen")
+                                navController2.navigate("detalhes_pedido_historico_screen")
+                                localStorage.saveDataString(context, it.foto_restaurante, "imageRestaurant")
                                 localStorage.saveDataInt(context, it.id_pedido, "idOrder")
                                 localStorage.saveDataString(context, it.foto_restaurante, "foto_restaurante")
                                 localStorage.saveDataString(context, it.estado_cliente, "estado_cliente")
@@ -283,7 +285,7 @@ fun OrderScreen(
                                     color = Color.White,
                                     fontSize = 10.sp
                                 )
-                                
+
                             }
 
                         }
