@@ -1,5 +1,6 @@
 package br.senai.sp.saveeats.model
 
+import br.senai.sp.saveeats.service.AvaliationService
 import br.senai.sp.saveeats.service.CategoryRestaurantService
 import br.senai.sp.saveeats.service.CategoryService
 import br.senai.sp.saveeats.service.ClientService
@@ -22,7 +23,7 @@ object RetrofitFactory {
 
     private const val baseURL2 = "http://10.107.144.7:8080/"
 
-    private const val baseURL3 = "http://10.107.144.5:9090/"
+    private const val baseURL3 = "http://192.168.0.61:8080/"
 
     private var retrofitFactory = Retrofit
         .Builder()
@@ -93,6 +94,14 @@ object RetrofitFactory {
 
     fun getRestaurantById() : RestaurantService{
         return  retrofitFactory.create(RestaurantService::class.java)
+    }
+
+    fun getRecomendation(): AvaliationService{
+        return retrofitFactory.create(AvaliationService::class.java)
+    }
+
+    fun postAvaliation(): AvaliationService{
+        return  retrofitFactory.create(AvaliationService::class.java)
     }
 
 }

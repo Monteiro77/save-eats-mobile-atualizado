@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.saveeats.avaliationcomponents.screen.AvaliationScreen
 import br.senai.sp.saveeats.categoryrestaurantcomponents.screen.CategoryRestaurantScreen
 import br.senai.sp.saveeats.historiccomponents.DetalhesPedidoHistoricoScreen
 import br.senai.sp.saveeats.logincomponents.screen.LoginScreen
@@ -39,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "profile_restaurant"
+                    startDestination = "avaliation_screen"
                 ) {
 
                     composable("splash_screen") {
@@ -121,6 +122,10 @@ class MainActivity : ComponentActivity() {
 
                     composable("profile_restaurant") {
                         RestaurantProfile(navController = navController , localStorage = Storage())
+                    }
+
+                    composable("avaliation_screen"){
+                        AvaliationScreen(navController = navController, lifecycleScope)
                     }
 
 
