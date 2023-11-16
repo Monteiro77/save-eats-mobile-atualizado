@@ -73,7 +73,7 @@ fun HistoricScreen(
 
     val callHistorico = RetrofitFactory
         .getHistoricoById()
-        .getHistoricoById(20)
+        .getHistoricoById(6)
 
     callHistorico.enqueue(object : retrofit2.Callback<HistoricoCliente> {
         override fun onResponse(
@@ -262,10 +262,10 @@ fun HistoricScreen(
                                 localStorage.saveDataString(context, it.foto_restaurante, "imageRestaurant")
                                 localStorage.saveDataInt(context, it.id_pedido, "idOrder")
                                 localStorage.saveDataString(context, it.foto_restaurante, "foto_restaurante")
-                                localStorage.saveDataString(context, it.estado_cliente, "estado_cliente")
+//                                localStorage.saveDataString(context, it.estado_cliente, "estado_cliente")
                                 localStorage.saveDataString(context, it.bairro_cliente, "bairro_cliente")
                                 localStorage.saveDataString(context, it.cep_cliente, "cep_cliente")
-                                localStorage.saveDataString(context, it.cidade_cliente, "cidade_cliente")
+//                                localStorage.saveDataString(context, it.cidade_cliente, "cidade_cliente")
                             },
                             modifier = Modifier
                                 .width(120.dp)

@@ -5,7 +5,7 @@
     <string name="email">Email</string>
     <string name="cpf">CPF</string>
     <string name="cep">CEP</string>
-    <string name="state">State</string>
+    <string name="uf">uf</string>
     <string name="city">City</string>
     <string name="neighborhood">Neighborhood</string>
     <string name="street">Street</string>
@@ -65,4 +65,6 @@
     <string name="make_a_wish">Make a wish</string>
     <string name="to_replace">To replace</string>
     <string name="details_orders">Order Details</string>
+    <string name="address">Address</string>
+
 </resources>

@@ -23,6 +23,7 @@ import br.senai.sp.saveeats.profilerestaurantcomponents.screen.RestaurantProfile
 import br.senai.sp.saveeats.recipecomponents.screen.RecipeScreen
 import br.senai.sp.saveeats.shoppingcartcomponents.screen.ShoppingCartScreen
 import br.senai.sp.saveeats.singupcomponents.screen.FirstSignup
+import br.senai.sp.saveeats.singupcomponents.screen.GetCepScreen
 import br.senai.sp.saveeats.singupcomponents.screen.SecondSignup
 import br.senai.sp.saveeats.singupcomponents.screen.ThirdSignupScreen
 import br.senai.sp.saveeats.splashcomponents.screen.SplashScreen
@@ -40,7 +41,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "avaliation_screen"
+                    startDestination = "login_screen"
                 ) {
 
                     composable("splash_screen") {
@@ -64,7 +65,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("second_signup_screen") {
-                        SecondSignup(navController = navController, localStorage = Storage())
+                        SecondSignup(navController = navController, localStorage = Storage(), lifecycleScope = lifecycleScope)
                     }
 
                     composable("third_signup_screen") {
@@ -124,9 +125,15 @@ class MainActivity : ComponentActivity() {
                         RestaurantProfile(navController = navController , localStorage = Storage())
                     }
 
-                    composable("avaliation_screen"){
-                        AvaliationScreen(navController = navController, lifecycleScope)
+                    composable("avaliation_screen") {
+                        AvaliationScreen(navController = navController , lifecycleScope)
                     }
+
+                    composable("get_cep_screen") {
+                        GetCepScreen(navController = navController , localStorage = Storage())
+                    }
+
+
 
 
 

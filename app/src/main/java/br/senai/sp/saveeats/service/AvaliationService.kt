@@ -1,6 +1,7 @@
 package br.senai.sp.saveeats.service
 
-import br.senai.sp.saveeats.model.FormPaymentList
+import br.senai.sp.saveeats.model.AvaliationList
+import br.senai.sp.saveeats.model.CategoryRestaurantList
 import br.senai.sp.saveeats.model.RecomendationsList
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -13,6 +14,7 @@ import retrofit2.http.Path
 
 interface AvaliationService {
 
+
     @Headers("Content-Type: application/json")
     @POST("/v1/saveeats/cliente-avaliar-restaurante")
     suspend fun postAvaliation(@Body body: JsonObject): Response<JsonObject>
@@ -20,5 +22,6 @@ interface AvaliationService {
     @GET("/v1/saveeats/recomendacao")
     fun getRecomendacoes(): Call<RecomendationsList>
 
-
+    @GET("v1/saveeats/avaliacoes/restaurante/idRestaurante/{id}")
+    fun getAvaliationsByIdRestaurant(@Path("id") idRestaurant: Int): Call<AvaliationList>
 }

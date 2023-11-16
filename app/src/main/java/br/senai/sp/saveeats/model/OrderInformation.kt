@@ -6,7 +6,7 @@ data class OrderInformation(
     val horario_pedido: String,
     val previsao_entrega: String,
     val data_pedido: String,
-    val valor_total: Float,
+    val valor_total: String,
     val status_pedido: String,
     val nome_forma_pagamento: String,
     val valor_entrega: String,

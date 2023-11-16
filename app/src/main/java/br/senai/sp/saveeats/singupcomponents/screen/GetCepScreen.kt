@@ -1,6 +1,5 @@
 package br.senai.sp.saveeats.singupcomponents.screen
 
-import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
@@ -13,12 +12,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Numbers
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Phone
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -48,36 +47,34 @@ import br.senai.sp.saveeats.components.CustomButton
 import br.senai.sp.saveeats.components.InputOutlineTextField
 
 @Composable
-fun FirstSignup(navController: NavController, localStorage: Storage) {
-
+fun GetCepScreen(
+    navController: NavController,
+    localStorage: Storage
+) {
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current
+    val scrollState = rememberScrollState()
 
-    var name by rememberSaveable { mutableStateOf("") }
-    var cpf by rememberSaveable { mutableStateOf("") }
-    var phone by rememberSaveable { mutableStateOf("") }
+    var validateCep by rememberSaveable { mutableStateOf(true) }
 
-    var validateName by rememberSaveable { mutableStateOf(true) }
-    var validateCpf by rememberSaveable { mutableStateOf(true) }
-    var validatePhone by rememberSaveable { mutableStateOf(true) }
+    val validateCepError = stringResource(id = R.string.cep_error)
 
-    val validateNameError = stringResource(id = R.string.name_error)
-    val validateCpfError = stringResource(id = R.string.cpf_error)
-    val validatePhoneError = stringResource(id = R.string.phone_error)
+    var cep by rememberSaveable {
+        mutableStateOf("")
+    }
 
-    fun validateData(
-        name: String, cpf: String, phone: String
+    fun validateCep(
+        cep: String
     ): Boolean {
 
-        validateName = name.isNotBlank()
-        validateCpf = cpf.isNotBlank()
-        validatePhone = Patterns.PHONE.matcher(phone).matches()
+        validateCep = cep.isNotBlank()
 
-        return validateName && validateCpf && validatePhone
+        return validateCep
+
 
     }
 
-    Surface (
+    Surface(
         modifier = Modifier
             .fillMaxSize(),
         color = colorResource(id = R.color.white)
@@ -165,50 +162,17 @@ fun FirstSignup(navController: NavController, localStorage: Storage) {
                     Column(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .padding(top = 40.dp)
+                            .verticalScroll(scrollState)
+                            .padding(top = 100.dp)
                     ) {
 
                         InputOutlineTextField(
-                            value = name,
-                            onValueChange = { name = it },
-                            label = stringResource(id = R.string.name),
-                            showError = !validateName,
-                            errorMessage = validateNameError,
-                            leadingIconImageVector = Icons.Default.Person,
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Text, imeAction = ImeAction.Next
-                            ),
-                            keyboardActions = KeyboardActions(onNext = {
-                                focusManager.moveFocus(FocusDirection.Down)
-                            }),
-                            borderColor = Color(72, 138, 39),
-                            border = ShapeDefaults.Small
-                        )
-
-                        InputOutlineTextField(
-                            value = cpf,
-                            onValueChange = { cpf = it },
-                            label = stringResource(id = R.string.cpf),
-                            showError = !validateCpf,
-                            errorMessage = validateCpfError,
-                            leadingIconImageVector = Icons.Default.Numbers,
-                            keyboardOptions = KeyboardOptions(
-                                keyboardType = KeyboardType.Number, imeAction = ImeAction.Next
-                            ),
-                            keyboardActions = KeyboardActions(onNext = {
-                                focusManager.moveFocus(FocusDirection.Down)
-                            }),
-                            borderColor = Color(72, 138, 39),
-                            border = ShapeDefaults.Small
-                        )
-
-                        InputOutlineTextField(
-                            value = phone,
-                            onValueChange = { phone = it },
-                            label = stringResource(id = R.string.phone),
-                            showError = !validatePhone,
-                            errorMessage = validatePhoneError,
-                            leadingIconImageVector = Icons.Default.Phone,
+                            value = cep,
+                            onValueChange = { cep = it },
+                            label = stringResource(id = R.string.cep),
+                            showError = !validateCep,
+                            errorMessage = validateCepError,
+                            leadingIconImageVector = Icons.Default.LocationOn,
                             keyboardOptions = KeyboardOptions(
                                 keyboardType = KeyboardType.Number, imeAction = ImeAction.Next
                             ),
@@ -228,45 +192,36 @@ fun FirstSignup(navController: NavController, localStorage: Storage) {
                         ) {
 
                             CustomButton(
-
                                 onClick = {
 
-                                    if (validateData(
-                                            name,
-                                            cpf,
-                                            phone
+                                    if (validateCep(
+                                            cep
                                         )
                                     ) {
 
-                                        localStorage.saveDataString(context, name, "name")
-                                        localStorage.saveDataString(context, cpf, "cpf")
-                                        localStorage.saveDataString(context, phone, "phone")
+                                        localStorage.saveDataString(context, cep, "cep")
 
-                                        navController.navigate("get_cep_screen")
+                                        navController.navigate("second_signup_screen")
 
                                     } else {
+
                                         Toast.makeText(
                                             context,
                                             "Please, review fields",
                                             Toast.LENGTH_SHORT
                                         ).show()
-                                    }
 
+                                    }
                                 },
                                 text = stringResource(id = R.string.next)
-
                             )
 
                         }
-
                     }
-
                 }
-
             }
-
         }
-
     }
 
 }
+

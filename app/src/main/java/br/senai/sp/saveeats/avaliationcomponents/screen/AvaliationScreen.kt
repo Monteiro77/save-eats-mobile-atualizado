@@ -14,9 +14,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
-import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
-import androidx.compose.foundation.lazy.staggeredgrid.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -193,6 +193,8 @@ fun AvaliationScreen(
             )
         ) {}
 
+        Spacer(modifier = Modifier.height(15.dp))
+
         Text(
             text = "Oque você achou do seu pedido?",
             color = Color(0, 0, 0, 255),
@@ -206,6 +208,8 @@ fun AvaliationScreen(
             fontSize = 16.sp,
             fontWeight = FontWeight(300)
         )
+
+        Spacer(modifier = Modifier.height(10.dp))
 
         Row(
             modifier = Modifier
@@ -277,16 +281,22 @@ fun AvaliationScreen(
 
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+
         Text(
             text = "Oque podemos melhorar?",
-            fontSize = 15.sp
+            fontSize = 18.sp,
+            fontWeight = FontWeight(500)
         )
 
 
+        Spacer(modifier = Modifier.height(10.dp))
 
-        LazyVerticalStaggeredGrid(
-            columns = StaggeredGridCells.Fixed(2),
-            verticalItemSpacing = 10.dp
+
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2),
+            horizontalArrangement = Arrangement.spacedBy(15.dp),
+            verticalArrangement = Arrangement.spacedBy(15.dp),
         ) {
 
             items(listRecomendation) {
@@ -294,7 +304,6 @@ fun AvaliationScreen(
                 Card(
                     modifier = Modifier
                         .height(50.dp)
-                        .width(150.dp)
                         .clickable {
                             idRecomendacao = it.id
                         },
@@ -324,13 +333,15 @@ fun AvaliationScreen(
             }
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
+
         OutlinedTextField(
             value = avaliationState,
             onValueChange = {
                 avaliationState = it
             },
             modifier = Modifier
-                .height(100.dp)
+                .height(300.dp)
                 .fillMaxWidth(),
             label = {
                 Text(
@@ -339,20 +350,37 @@ fun AvaliationScreen(
             }
         )
 
-        Button(
-            onClick = {
-                avaliation(
-                    6,
-                    1,
-                    quantidadeEstrela,
-                    avaliationState,
-                    currentDate,
-                    idRecomendacao
-                )
-            }
-        ) {
+        Spacer(modifier = Modifier.height(20.dp))
 
-            Text(text = "Avaliar")
+        Row (
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ){
+
+
+            Button(
+                onClick = {
+                    avaliation(
+                        6,
+                        1,
+                        quantidadeEstrela,
+                        avaliationState,
+                        currentDate,
+                        idRecomendacao
+                    )
+                },
+                modifier = Modifier
+                    .height(50.dp)
+                    .width(180.dp)
+            ) {
+
+                Text(
+                    text = "Enviar Avaliação",
+                    fontSize = 15.sp
+                )
+
+            }
 
         }
 

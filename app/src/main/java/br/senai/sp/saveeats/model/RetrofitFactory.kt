@@ -13,6 +13,7 @@ import br.senai.sp.saveeats.service.RecipesService
 import br.senai.sp.saveeats.service.RestaurantService
 import br.senai.sp.saveeats.service.SignupService
 import br.senai.sp.saveeats.service.TipsService
+import br.senai.sp.saveeats.service.ViaCepService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -23,13 +24,30 @@ object RetrofitFactory {
 
     private const val baseURL2 = "http://10.107.144.7:8080/"
 
-    private const val baseURL3 = "http://192.168.0.61:8080/"
+    private const val baseURL3 = "http://10.107.144.11:8080/"
+
+    private const val baseURLViaCep = "https://viacep.com.br/"
+
+    fun getInstance(): Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(baseURLViaCep)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    }
 
     private var retrofitFactory = Retrofit
         .Builder()
         .baseUrl(baseURL3)
         .addConverterFactory(GsonConverterFactory.create())
         .build()
+
+    private  var retrofitFactoryViaCep = Retrofit
+        .Builder()
+        .baseUrl(baseURLViaCep)
+        .addConverterFactory(GsonConverterFactory.create())
+        .build()
+
     fun getSignup(): SignupService {
         return retrofitFactory.create(SignupService::class.java)
     }
@@ -96,6 +114,17 @@ object RetrofitFactory {
         return  retrofitFactory.create(RestaurantService::class.java)
     }
 
+    fun getAvaliationByIdRestaurant() : AvaliationService{
+        return  retrofitFactory.create(AvaliationService::class.java)
+    }
+
+    fun getAdressByIdRestaurant() : RestaurantService{
+        return  retrofitFactory.create(RestaurantService::class.java)
+    }
+    fun getHorarioDeFuncionamentoByIdRestaurante() : RestaurantService{
+        return  retrofitFactory.create(RestaurantService::class.java)
+    }
+
     fun getRecomendation(): AvaliationService{
         return retrofitFactory.create(AvaliationService::class.java)
     }
@@ -103,5 +132,10 @@ object RetrofitFactory {
     fun postAvaliation(): AvaliationService{
         return  retrofitFactory.create(AvaliationService::class.java)
     }
+
+    fun getAdressByViaCep(): ViaCepService{
+        return  retrofitFactoryViaCep.create(ViaCepService::class.java)
+    }
+
 
 }

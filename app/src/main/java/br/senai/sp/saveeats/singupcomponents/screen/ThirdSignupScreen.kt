@@ -1,5 +1,6 @@
 package br.senai.sp.saveeats.singupcomponents.screen
 
+import android.util.Log
 import android.util.Patterns
 import android.view.SurfaceView
 import android.widget.Toast
@@ -64,7 +65,7 @@ fun ThirdSignupScreen(
     val cpf = localStorage.readDataString(context, "cpf")
     val phone = localStorage.readDataString(context, "phone")
     val cep = localStorage.readDataString(context, "cep")
-    val state = localStorage.readDataString(context, "state")
+    val uf = localStorage.readDataString(context, "uf")
     val city = localStorage.readDataString(context, "city")
     val neighborhood = localStorage.readDataString(context, "neighborhood")
     val street = localStorage.readDataString(context, "street")
@@ -105,7 +106,7 @@ fun ThirdSignupScreen(
         name: String,
         cpf: String,
         cep: String,
-        state: String,
+        uf: String,
         city: String,
         neighborhood: String,
         street: String,
@@ -131,7 +132,7 @@ fun ThirdSignupScreen(
                     name,
                     cpf,
                     cep,
-                    state,
+                    uf,
                     city,
                     neighborhood,
                     street,
@@ -151,6 +152,7 @@ fun ThirdSignupScreen(
                     Toast.makeText(
                         context, "This email is already linked to an account", Toast.LENGTH_SHORT
                     ).show()
+                    Log.i("ERROR", "signup: ${response.body()!!}")
 
                 }
 
@@ -325,7 +327,7 @@ fun ThirdSignupScreen(
                                         name!!,
                                         cpf!!,
                                         cep!!,
-                                        state!!,
+                                        uf!!,
                                         city!!,
                                         neighborhood!!,
                                         street!!,

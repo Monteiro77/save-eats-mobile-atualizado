@@ -80,6 +80,9 @@ fun DetalhesPedidoHistoricoScreen(
 
     val idOrder = localStorage.readDataInt(context, "idOrder")
 
+
+
+    Log.e("TESTE100", "DetalhesPedidoHistoricoScreen: $idOrder", )
     val callPedido = RetrofitFactory
         .getOrderById()
         .getOrderById(idOrder)
@@ -385,8 +388,8 @@ fun DetalhesPedidoHistoricoScreen(
 
                     Text(
                         text = "R$ ${calculoTotal(
-                            detalhesPedido[0].valor_total,
-                            detalhesPedido[0].valor_entrega.toFloat()
+                            detalhesPedido[0].valor_total.replace(",", ".").toFloat(),
+                            detalhesPedido[0].valor_entrega.replace(",", ".").toFloat()
                         )}"
                     )
 

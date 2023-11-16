@@ -34,7 +34,7 @@ fun InputOutlineTextField(
     value: String,
     onValueChange: (String) -> Unit,
     label: String = "",
-    leadingIconImageVector: ImageVector ,
+    leadingIconImageVector: ImageVector,
     leadingIconDescription: String = "",
     isPasswordField: Boolean = false,
     isPasswordVisible: Boolean = false,

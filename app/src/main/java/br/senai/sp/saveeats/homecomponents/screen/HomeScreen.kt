@@ -180,28 +180,28 @@ fun HomeScreen(
 
     val idClient = localStorage.readDataInt(context, "idClient")
 
-    val callClientAddress = RetrofitFactory
-        .getAddressClient()
-        .getAddressClient(idClient)
-
-    callClientAddress.enqueue(object : Callback<ClientAddressList> {
-        override fun onResponse(
-            call: Call<ClientAddressList>,
-            response: Response<ClientAddressList>
-        ) {
-            listClientAddress = response.body()!!.endereco_cliente
-        }
-
-        override fun onFailure(
-            call: Call<ClientAddressList>,
-            t: Throwable
-        ) {
-
-            Log.e("ds3t", "onFailure: ${t.message}")
-
-        }
-
-    })
+//    val callClientAddress = RetrofitFactory
+//        .getAddressClient()
+//        .getAddressClient(idClient)
+//
+//    callClientAddress.enqueue(object : Callback<ClientAddressList> {
+//        override fun onResponse(
+//            call: Call<ClientAddressList>,
+//            response: Response<ClientAddressList>
+//        ) {
+//            listClientAddress = response.body()!!.endereco_cliente
+//        }
+//
+//        override fun onFailure(
+//            call: Call<ClientAddressList>,
+//            t: Throwable
+//        ) {
+//
+//            Log.e("ds3t", "onFailure: ${t.message}")
+//
+//        }
+//
+//    })
 
     //API CLIENT ADDRESS - END
 
