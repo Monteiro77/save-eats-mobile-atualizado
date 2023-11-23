@@ -242,7 +242,7 @@ fun FirstSignup(navController: NavController, localStorage: Storage) {
                                         localStorage.saveDataString(context, cpf, "cpf")
                                         localStorage.saveDataString(context, phone, "phone")
 
-                                        navController.navigate("get_cep_screen")
+                                        navController.navigate("second_signup_screen")
 
                                     } else {
                                         Toast.makeText(

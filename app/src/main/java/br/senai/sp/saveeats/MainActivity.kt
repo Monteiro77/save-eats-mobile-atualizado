@@ -23,7 +23,6 @@ import br.senai.sp.saveeats.profilerestaurantcomponents.screen.RestaurantProfile
 import br.senai.sp.saveeats.recipecomponents.screen.RecipeScreen
 import br.senai.sp.saveeats.shoppingcartcomponents.screen.ShoppingCartScreen
 import br.senai.sp.saveeats.singupcomponents.screen.FirstSignup
-import br.senai.sp.saveeats.singupcomponents.screen.GetCepScreen
 import br.senai.sp.saveeats.singupcomponents.screen.SecondSignup
 import br.senai.sp.saveeats.singupcomponents.screen.ThirdSignupScreen
 import br.senai.sp.saveeats.splashcomponents.screen.SplashScreen
@@ -127,10 +126,6 @@ class MainActivity : ComponentActivity() {
 
                     composable("avaliation_screen") {
                         AvaliationScreen(navController = navController , lifecycleScope)
-                    }
-
-                    composable("get_cep_screen") {
-                        GetCepScreen(navController = navController , localStorage = Storage())
                     }
 
 

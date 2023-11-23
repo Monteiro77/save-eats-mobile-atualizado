@@ -19,9 +19,11 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -36,6 +38,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.saveeats.R
@@ -51,12 +54,16 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import retrofit2.Call
 import retrofit2.Response
+import java.util.Locale
 
 @Composable
 fun DetalhesPedidoHistoricoScreen(
     navController: NavController,
     localStorage: Storage
 ) {
+
+
+
     val waitingAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.waiting_animation))
 
     val verifierAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.verified_animation))
@@ -82,7 +89,7 @@ fun DetalhesPedidoHistoricoScreen(
 
 
 
-    Log.e("TESTE100", "DetalhesPedidoHistoricoScreen: $idOrder", )
+    Log.e("TESTE100", "DetalhesPedidoHistoricoScreen: $idOrder")
     val callPedido = RetrofitFactory
         .getOrderById()
         .getOrderById(idOrder)
@@ -197,7 +204,11 @@ fun DetalhesPedidoHistoricoScreen(
                         modifier = Modifier
                             .clickable {
                                 navController.navigate("products_restaurant_screen")
-                                localStorage.saveDataString(context, detalhesPedido[0].nome_restaurante, "nameRestaurant")
+                                localStorage.saveDataString(
+                                    context,
+                                    detalhesPedido[0].nome_restaurante,
+                                    "nameRestaurant"
+                                )
 
                             }
 
@@ -232,12 +243,14 @@ fun DetalhesPedidoHistoricoScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
 
-                        if (detalhesPedido[0].status_pedido == "Pedido entregue;") {
+                        if (detalhesPedido[0].status_pedido == "Pedido entregue") {
                             LottieAnimation(
                                 composition = verifierAnimation,
                                 modifier = Modifier.size(20.dp),
                                 iterations = LottieConstants.IterateForever
                             )
+
+
                         } else {
                             LottieAnimation(
                                 composition = waitingAnimation,
@@ -387,10 +400,12 @@ fun DetalhesPedidoHistoricoScreen(
                     )
 
                     Text(
-                        text = "R$ ${calculoTotal(
-                            detalhesPedido[0].valor_total.replace(",", ".").toFloat(),
-                            detalhesPedido[0].valor_entrega.replace(",", ".").toFloat()
-                        )}"
+                        text = "R$ ${
+                            calculoTotal(
+                                detalhesPedido[0].valor_total.replace(",", ".").toFloat(),
+                                detalhesPedido[0].valor_entrega.replace(",", ".").toFloat()
+                            )
+                        }"
                     )
 
 
@@ -533,11 +548,17 @@ fun DetalhesPedidoHistoricoScreen(
     }
 }
 
+
+
+
 fun calculoTotal(
     subtotal: Float,
     frete: Float
-): Float {
+): String {
     val resultado = subtotal + frete
+    val resultadoFormatado = String.format(Locale.getDefault(), "%.2f", resultado)
 
-    return resultado
+
+
+    return resultadoFormatado
 }

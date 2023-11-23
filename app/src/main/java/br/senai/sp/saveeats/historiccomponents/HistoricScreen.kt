@@ -201,7 +201,7 @@ fun HistoricScreen(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
 
-                            if (it.status_pedido == "Pedido Finalizado" || it.status_pedido == "Pedido entregue;" || it.status_pedido.length == 15) {
+                            if (it.status_pedido == "Pedido Finalizado" || it.status_pedido == "Pedido entregue" || it.status_pedido.length == 15) {
 
                                 LottieAnimation(
                                     composition = verifierAnimation,
@@ -224,6 +224,8 @@ fun HistoricScreen(
                                     fontSize = 10.sp
                                 )
 
+                                Spacer(modifier = Modifier.width(4.dp))
+
                                 Text(
                                     text = it.numero_pedido,
                                     color = Color(104, 104, 104),
@@ -245,6 +247,8 @@ fun HistoricScreen(
                                     color = Color(104, 104, 104),
                                     fontSize = 10.sp
                                 )
+
+                                Spacer(modifier = Modifier.width(4.dp))
 
                                 Text(
                                     text = it.numero_pedido,

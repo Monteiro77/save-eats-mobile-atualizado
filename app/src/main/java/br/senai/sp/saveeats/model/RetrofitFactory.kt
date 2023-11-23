@@ -24,7 +24,7 @@ object RetrofitFactory {
 
     private const val baseURL2 = "http://10.107.144.7:8080/"
 
-    private const val baseURL3 = "http://10.107.144.11:8080/"
+    private const val baseURL3 = "http://10.107.144.31:8080/"
 
     private const val baseURLViaCep = "https://viacep.com.br/"
 

@@ -22,7 +22,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationCity
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Numbers
-import androidx.compose.material3.CircularProgressIndicator
+//import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ShapeDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -52,13 +52,9 @@ import br.senai.sp.saveeats.R
 import br.senai.sp.saveeats.Storage
 import br.senai.sp.saveeats.components.CustomButton
 import br.senai.sp.saveeats.components.InputOutlineTextField
-import br.senai.sp.saveeats.model.AdressClientViaCep
 import br.senai.sp.saveeats.model.RetrofitFactory
 import br.senai.sp.saveeats.service.ViaCepService
 import kotlinx.coroutines.launch
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 @SuppressLint("CoroutineCreationDuringComposition")
 @Composable
@@ -72,20 +68,23 @@ fun SecondSignup(
     val focusManager = LocalFocusManager.current
     val scrollState = rememberScrollState()
 
-    val cep = localStorage.readDataString(context, "cep")
-    var status by remember { mutableStateOf(false) }
+    var cep by rememberSaveable { mutableStateOf("") }
+//    var status by remember { mutableStateOf(false) }
     var uf by rememberSaveable { mutableStateOf("") }
     var city by rememberSaveable { mutableStateOf("") }
     var neighborhood by rememberSaveable { mutableStateOf("") }
     var street by rememberSaveable { mutableStateOf("") }
     var number by rememberSaveable { mutableStateOf("") }
 
+
     var validateState by rememberSaveable { mutableStateOf(true) }
     var validateCity by rememberSaveable { mutableStateOf(true) }
     var validateNeighborhood by rememberSaveable { mutableStateOf(true) }
     var validateStreet by rememberSaveable { mutableStateOf(true) }
     var validateNumber by rememberSaveable { mutableStateOf(true) }
+    var validateCep by rememberSaveable { mutableStateOf(true) }
 
+    val validateCepError = stringResource(id = R.string.cep_error)
     val validateStateError = stringResource(id = R.string.state_error)
     val validateCityError = stringResource(id = R.string.city_error)
     val validateNeighborhoodError = stringResource(id = R.string.neighborhood_error)
@@ -93,6 +92,7 @@ fun SecondSignup(
     val validateNumberError = stringResource(id = R.string.number_error)
 
     fun validateData(
+        cep: String,
         state: String,
         city: String,
         neighborhood: String,
@@ -100,38 +100,36 @@ fun SecondSignup(
         number: String
     ): Boolean {
 
-
+        validateCep = cep.isNotBlank()
         validateState = state.isNotBlank()
         validateCity = city.isNotBlank()
         validateNeighborhood = neighborhood.isNotBlank()
         validateStreet = street.isNotBlank()
         validateNumber = number.isNotBlank()
 
-        return validateState && validateCity && validateNeighborhood && validateStreet && validateNumber
+        return validateState && validateCity && validateNeighborhood && validateStreet && validateNumber && validateCep
 
     }
 
     Log.e("23456", "SecondSignup: $cep")
 
 
-    lateinit var viaCepService: ViaCepService
-    viaCepService = RetrofitFactory.getInstance().create(ViaCepService::class.java)
+    val viaCepService: ViaCepService = RetrofitFactory.getInstance().create(ViaCepService::class.java)
 
 
 
     lifecycleScope.launch {
-        Log.i("cep", "SecondSignup: ${cep!!}")
-        val result = viaCepService.getAdressClientByViaCep(cep!!)
+        val result = viaCepService.getAdressClientByViaCep(cep)
 
         if (result.isSuccessful) {
             street = result.body()!!.logradouro
             neighborhood = result.body()!!.bairro
             city = result.body()!!.localidade
             uf = result.body()!!.uf
-            status = true
+
 
         } else {
-            Log.e("TESTE1", "SecondSignup: ${result.body()}")
+            Log.e("catchError", "SecondSignup: ${result.body()}")
         }
     }
 
@@ -226,7 +224,24 @@ fun SecondSignup(
                             .verticalScroll(scrollState)
                             .padding(top = 40.dp)
                     ) {
-                        if (status) {
+
+
+                        InputOutlineTextField(
+                            value = cep,
+                            onValueChange = { cep = it },
+                            label = stringResource(id = R.string.cep),
+                            showError = !validateCep,
+                            errorMessage = validateCepError,
+                            leadingIconImageVector = Icons.Default.LocationOn,
+                            keyboardOptions = KeyboardOptions(
+                                keyboardType = KeyboardType.Number, imeAction = ImeAction.Next
+                            ),
+                            keyboardActions = KeyboardActions(onNext = {
+                                focusManager.moveFocus(FocusDirection.Down)
+                            }),
+                            borderColor = Color(72, 138, 39),
+                            border = ShapeDefaults.Small
+                        )
 
 
                             InputOutlineTextField(
@@ -292,6 +307,7 @@ fun SecondSignup(
                                 ),
                                 keyboardActions = KeyboardActions(onNext = {
                                     focusManager.moveFocus(FocusDirection.Down)
+
                                 }),
                                 borderColor = Color(72, 138, 39),
                                 border = ShapeDefaults.Small
@@ -331,7 +347,8 @@ fun SecondSignup(
                                                 city,
                                                 neighborhood,
                                                 street,
-                                                number
+                                                number,
+                                                cep
                                             )
                                         ) {
 
@@ -370,12 +387,6 @@ fun SecondSignup(
 
                             }
 
-                        } else {
-                            Column {
-                                CircularProgressIndicator()
-                            }
-
-                        }
 
                     }
 
