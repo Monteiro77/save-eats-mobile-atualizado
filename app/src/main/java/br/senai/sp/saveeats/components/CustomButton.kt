@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import br.senai.sp.saveeats.ui.theme.fontFamily
 
 @Composable
 fun CustomButton(
@@ -32,6 +33,7 @@ fun CustomButton(
         Text(
             text = text.uppercase(),
             fontSize = 20.sp,
+            fontFamily = fontFamily,
             color = Color(255,255,255)
         )
         

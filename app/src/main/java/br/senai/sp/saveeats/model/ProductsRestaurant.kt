@@ -5,5 +5,5 @@ data class ProductsRestaurant(
     val nome: String,
     val descricao: String,
     val imagem: String,
-    val preco: Float
+    val preco: String
 )

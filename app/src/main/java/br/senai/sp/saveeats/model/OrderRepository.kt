@@ -14,8 +14,7 @@ class OrderRepository {
         id_restaurante_frete_area_entrega: Int,
         id_cliente: Int,
         id_restaurante: Int,
-        produto_id1: Int,
-        produto_id2: Int? = null
+        produtos_ids: String,
     ) : Response<JsonObject> {
 
         val requestBody = JsonObject().apply {
@@ -25,8 +24,7 @@ class OrderRepository {
             addProperty("id_restaurante_frete_area_entrega", id_restaurante_frete_area_entrega)
             addProperty("id_cliente", id_cliente)
             addProperty("id_restaurante", id_restaurante)
-            addProperty("produto_id1", produto_id1)
-            addProperty("produto_id2", produto_id2)
+            addProperty("produtos_ids", produtos_ids)
 
         }
 

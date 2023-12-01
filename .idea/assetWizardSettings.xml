@@ -18,7 +18,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="file:$USER_HOME$/Library/Android/sdk/icons/material/materialicons/favorite/baseline_favorite_24.xml" />
+                                      <entry key="url" value="jar:file:/private/var/folders/jj/b0qsh46j36g0t_yrgp9dlc8w65c2z6/T/AppTranslocation/6764C94A-B37F-4167-A029-EC3099C3C4B9/d/Android%20Studio.app/Contents/plugins/android/lib/android.jar!/images/material/icons/materialicons/photo_camera/baseline_photo_camera_24.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -28,7 +28,7 @@
                         </option>
                         <option name="values">
                           <map>
-                            <entry key="outputName" value="baseline_favorite_24" />
+                            <entry key="outputName" value="baseline_photo_camera_24" />
                             <entry key="sourceFile" value="/C:\Senai\save-eats-mobile-atualizado" />
                           </map>
                         </option>

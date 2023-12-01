@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "963352718546",
+    "project_id": "save-eats-26982",
+    "storage_bucket": "save-eats-26982.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:963352718546:android:f14c076979067a839a510b",
+        "android_client_info": {
+          "package_name": "br.senai.sp.saveeats"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC2APseEHLW4Jg22OVT0ms--MDvJfjixSw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

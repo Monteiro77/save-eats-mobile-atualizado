@@ -1,6 +1,6 @@
 package br.senai.sp.saveeats.service
 
-import br.senai.sp.saveeats.model.Order
+import br.senai.sp.saveeats.model.OrderList
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Response
@@ -16,6 +16,5 @@ interface OrderService {
     suspend fun order(@Body body: JsonObject): Response<JsonObject>
 
     @GET("/v1/saveeats/detalhes/pedido/id/{id_pedido}")
-    fun getOrderById(@Path("id_pedido") id_pedido: Int): Call<Order>
-
+    fun getOrderById(@Path("id_pedido") id_pedido: Int): Call<OrderList>
 }
