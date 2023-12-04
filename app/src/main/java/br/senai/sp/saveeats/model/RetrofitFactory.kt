@@ -1,5 +1,6 @@
 package br.senai.sp.saveeats.model
 
+import br.senai.sp.saveeats.service.AvaliationService
 import br.senai.sp.saveeats.service.CategoryRestaurantService
 import br.senai.sp.saveeats.service.CategoryService
 import br.senai.sp.saveeats.service.ClientService
@@ -10,6 +11,7 @@ import br.senai.sp.saveeats.service.LoginService
 import br.senai.sp.saveeats.service.OrderService
 import br.senai.sp.saveeats.service.ProductsRestaurantService
 import br.senai.sp.saveeats.service.RecipesService
+import br.senai.sp.saveeats.service.RecomendationService
 import br.senai.sp.saveeats.service.RestaurantService
 import br.senai.sp.saveeats.service.SignupService
 import br.senai.sp.saveeats.service.TipsService
@@ -24,7 +26,7 @@ object RetrofitFactory {
 
     private const val baseViaCepURL = "https://viacep.com.br/"
 
-    private const val baseURL2 = "http://10.107.144.19:8080/"
+    private const val baseURL2 = "https://save-eats.azurewebsites.net/"
 
     private const val baseURL3 = "http://10.107.144.21:8080/"
 
@@ -113,6 +115,14 @@ object RetrofitFactory {
 
     fun getOrderById(): OrderService{
         return  retrofitFactory.create(OrderService::class.java)
+    }
+
+    fun getAvaliation(): AvaliationService{
+        return  retrofitFactory.create(AvaliationService::class.java)
+    }
+
+    fun getRecomendations(): RecomendationService{
+        return retrofitFactory.create(RecomendationService::class.java)
     }
 
 }

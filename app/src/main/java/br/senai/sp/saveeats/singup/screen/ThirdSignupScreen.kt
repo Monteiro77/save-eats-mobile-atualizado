@@ -1,6 +1,5 @@
 package br.senai.sp.saveeats.singup.screen
 
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.compose.foundation.Image
@@ -62,9 +61,8 @@ fun ThirdSignupScreen(
     lifecycleScope: LifecycleCoroutineScope
 ) {
     lateinit var storageRef: StorageReference
-    lateinit var fibaseFirestore: FirebaseFirestore
     storageRef = FirebaseStorage.getInstance().reference.child("images")
-    fibaseFirestore = FirebaseFirestore.getInstance()
+    val fibaseFirestore: FirebaseFirestore = FirebaseFirestore.getInstance()
 
     val context = LocalContext.current
     val focusManager = LocalFocusManager.current

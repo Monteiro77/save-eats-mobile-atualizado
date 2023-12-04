@@ -7,6 +7,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import br.senai.sp.saveeats.avaliation.screen.AvaliationScreen
 import br.senai.sp.saveeats.categoryrestaurant.screen.CategoryRestaurantScreen
 import br.senai.sp.saveeats.editprofile.screen.EditProfileScreen
 import br.senai.sp.saveeats.historic.screen.DetalhesPedidoHistoricoScreen
@@ -89,7 +90,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("order_screen") {
-                        OrderScreen(navController = navController, localStorage = Storage(), lifecycleScope = lifecycleScope, "",  {})
+                        OrderScreen(navController = navController, localStorage = Storage(), lifecycleScope = lifecycleScope, "") {}
                     }
 
                     composable("profile_screen") {
@@ -131,6 +132,12 @@ class MainActivity : ComponentActivity() {
                     composable("detalhes_pedido_historico_screen") {
                         DetalhesPedidoHistoricoScreen(navController = navController , localStorage = Storage())
                     }
+
+                    composable("avaliation_screen") {
+                        AvaliationScreen(navController = navController , lifecycleScope)
+                    }
+
+
 
                 }
 
