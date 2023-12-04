@@ -2,6 +2,7 @@ package br.senai.sp.saveeats.recipe.screen
 
 import android.annotation.SuppressLint
 import android.util.Log
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -15,8 +16,9 @@ import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -33,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -50,6 +53,7 @@ import br.senai.sp.saveeats.model.RecipeDetails
 import br.senai.sp.saveeats.model.RecipeDetailsList
 import br.senai.sp.saveeats.model.RecipeIngredients
 import br.senai.sp.saveeats.model.RetrofitFactory
+import br.senai.sp.saveeats.ui.theme.fontFamily
 import coil.compose.AsyncImage
 import retrofit2.Call
 import retrofit2.Callback
@@ -301,80 +305,107 @@ fun RecipeScreen(
                 color = Color(246, 246, 246),
                 shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)
             ) {
+                Column {
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 20.dp)
-                ) {
 
-                    Text(
+                    Row(
                         modifier = Modifier
-                            .padding(start = 55.dp)
-                            .clickable { progressState = true },
-                        text = stringResource(id = R.string.description),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight(400)
-                    )
-
-                    Spacer(modifier = Modifier.width(40.dp))
-
-                    Text(
-                        modifier = Modifier
-                            .clickable { progressState = false },
-                        text = stringResource(id = R.string.method_of_preparation),
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight(400)
-                    )
-
-                }
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                if (progressState) {
-
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .offset(x = 20.dp, y = 80.dp)
+                            .fillMaxWidth()
+                            .padding(top = 20.dp)
                     ) {
 
                         Text(
+                            modifier = Modifier
+                                .padding(start = 55.dp)
+                                .clickable { progressState = true },
                             text = stringResource(id = R.string.description),
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.W500,
-                            color = Color(20, 58, 11)
+                            fontWeight = FontWeight(400)
                         )
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.width(40.dp))
 
                         Text(
                             modifier = Modifier
-                                .width(380.dp),
-                            text = descriptionRecipe!!,
-                            textAlign = TextAlign.Start
-                        )
-
-                        Spacer(modifier = Modifier.height(20.dp))
-
-                        Text(
-                            text = stringResource(id = R.string.ingredients),
+                                .clickable { progressState = false },
+                            text = stringResource(id = R.string.method_of_preparation),
                             fontSize = 18.sp,
-                            fontWeight = FontWeight.W500,
-                            color = Color(20, 58, 11)
+                            fontWeight = FontWeight(400)
                         )
 
-                        Spacer(modifier = Modifier.height(20.dp))
+                    }
 
-                        LazyColumn() {
+                    Spacer(modifier = Modifier.height(10.dp))
 
-                            items(listRecipeIngredients) {
+                    if (progressState) {
 
-                                Row {
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .offset(x = 20.dp)
+                        ) {
 
-                                    AsyncImage(model = it.foto_ingrediente, contentDescription = "")
+                            Text(
+                                text = stringResource(id = R.string.description),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.W500,
+                                color = Color(20, 58, 11)
+                            )
 
-                                    Text(text = it.nome_ingrediente)
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            Text(
+                                modifier = Modifier
+                                    .width(380.dp),
+                                text = descriptionRecipe!!,
+                                textAlign = TextAlign.Start
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            Text(
+                                text = stringResource(id = R.string.ingredients),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.W500,
+                                color = Color(20, 58, 11)
+                            )
+
+                            Spacer(modifier = Modifier.height(20.dp))
+
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(1),
+                                verticalArrangement = Arrangement.spacedBy(10.dp)
+                            ) {
+
+                                items(listRecipeIngredients) {
+
+                                    Row(
+                                        verticalAlignment = Alignment.CenterVertically
+                                    ) {
+
+                                        AsyncImage(
+                                            model = it.foto_ingrediente,
+                                            contentDescription = "",
+                                            modifier = Modifier
+                                                .size(45.dp)
+                                                .border(
+                                                    1.dp,
+                                                    Color(41, 95, 27),
+                                                    RoundedCornerShape(30)
+                                                )
+                                                .clip(RoundedCornerShape(30)),
+                                            contentScale = ContentScale.Crop,
+
+                                            )
+
+                                        Spacer(modifier = Modifier.width(20.dp))
+
+                                        Text(
+                                            text = it.nome_ingrediente,
+                                            fontFamily = fontFamily
+                                        )
+
+                                    }
 
                                 }
 
@@ -382,27 +413,26 @@ fun RecipeScreen(
 
                         }
 
-                    }
+                    } else {
 
-                } else {
+                        Column(
+                            modifier = Modifier
+                                .offset(x = 20.dp,y = 10.dp)
+                                .width(370.dp)
+                        ) {
 
-                    Column(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .offset(x = 20.dp, y = 80.dp)
-                    ) {
+                            Text(
+                                text = methodOfPreparation!!.replace(".", ".\n"),
+                                fontSize = 18.sp,
+                                fontWeight = FontWeight.W500,
+                                color = Color(20, 58, 11)
+                            )
 
-                        Text(
-                            text = methodOfPreparation!!,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.W500,
-                            color = Color(20, 58, 11)
-                        )
+                        }
 
                     }
 
                 }
-
             }
 
         }

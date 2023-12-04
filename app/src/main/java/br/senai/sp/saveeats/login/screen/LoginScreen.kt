@@ -118,11 +118,20 @@ fun LoginScreen(
 
                     val photo = clientObject.getString("foto")
 
+                    val phone = clientObject.getString("telefone")
+
+                    val password = clientObject.getString("senha")
+
+
+
                     Toast.makeText(context, "Welcome", Toast.LENGTH_SHORT).show()
                     localStorage.saveDataInt(context, id, "idClient")
                     localStorage.saveDataString(context, cpf, "cpfClient")
                     localStorage.saveDataString(context, name, "nameClient")
                     localStorage.saveDataString(context, photo, "photoClient")
+                    localStorage.saveDataString(context, email, "emailClient")
+                    localStorage.saveDataString(context, phone, "phoneClient")
+                    localStorage.saveDataString(context, password, "passwordClient")
                     navController.navigate("home_screen")
 
                 } else {

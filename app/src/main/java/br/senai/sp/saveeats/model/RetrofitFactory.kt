@@ -5,6 +5,7 @@ import br.senai.sp.saveeats.service.CategoryRestaurantService
 import br.senai.sp.saveeats.service.CategoryService
 import br.senai.sp.saveeats.service.ClientService
 import br.senai.sp.saveeats.service.DeliveryAreaService
+import br.senai.sp.saveeats.service.EditProfileService
 import br.senai.sp.saveeats.service.FormPaymentService
 import br.senai.sp.saveeats.service.HistoricService
 import br.senai.sp.saveeats.service.LoginService
@@ -123,6 +124,10 @@ object RetrofitFactory {
 
     fun getRecomendations(): RecomendationService{
         return retrofitFactory.create(RecomendationService::class.java)
+    }
+
+    fun getEditProfile(): EditProfileService{
+        return  retrofitFactory.create(EditProfileService::class.java)
     }
 
 }

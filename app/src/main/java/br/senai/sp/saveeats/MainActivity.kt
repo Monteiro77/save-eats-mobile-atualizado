@@ -98,7 +98,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("edit_profile_screen") {
-                        EditProfileScreen(localStorage = Storage())
+                        EditProfileScreen(localStorage = Storage(), lifecycleScope)
                     }
 
                     composable("recipe_screen") {
