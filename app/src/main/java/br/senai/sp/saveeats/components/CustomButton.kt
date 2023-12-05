@@ -40,3 +40,31 @@ fun CustomButton(
     }
     
 }
+
+@Composable
+fun SecondCustomButton(
+    onClick: () -> Unit,
+    text: String
+) {
+
+    Button(
+        onClick,
+        modifier = Modifier
+            .width(135.dp)
+            .height(45.dp),
+        shape = RoundedCornerShape(30.dp),
+        colors = ButtonDefaults.buttonColors(
+            backgroundColor = Color(76,132,62)
+        )
+    ) {
+
+        Text(
+            text = text.uppercase(),
+            fontSize = 15.sp,
+            fontFamily = fontFamily,
+            color = Color(255,255,255)
+        )
+
+    }
+
+}

@@ -21,6 +21,7 @@ import br.senai.sp.saveeats.product.screen.ProductScreen
 import br.senai.sp.saveeats.productsrestaurant.screen.ProductsRestaurantScreen
 import br.senai.sp.saveeats.profile.screen.ProfileScreen
 import br.senai.sp.saveeats.recipe.screen.RecipeScreen
+import br.senai.sp.saveeats.restaurantprofile.screen.RestaurantProfile
 import br.senai.sp.saveeats.shoppingcart.screen.ShoppingCartScreen
 import br.senai.sp.saveeats.singup.screen.FirstSignup
 import br.senai.sp.saveeats.singup.screen.SecondSignup
@@ -42,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "login_screen"
+                    startDestination = "restaurant_profile"
                 ) {
 
                     composable("splash_screen") {
@@ -98,7 +99,7 @@ class MainActivity : ComponentActivity() {
                     }
 
                     composable("edit_profile_screen") {
-                        EditProfileScreen(localStorage = Storage(), lifecycleScope)
+                        EditProfileScreen(localStorage = Storage(), lifecycleScope, navController = navController)
                     }
 
                     composable("recipe_screen") {
@@ -135,6 +136,9 @@ class MainActivity : ComponentActivity() {
 
                     composable("avaliation_screen") {
                         AvaliationScreen(navController = navController , lifecycleScope)
+                    }
+                    composable("restaurant_profile") {
+                        RestaurantProfile(navController = navController , Storage())
                     }
 
 

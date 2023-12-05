@@ -170,6 +170,9 @@ fun ThirdSignupScreen(
                     localStorage.saveDataInt(context, id, "idClient")
                     localStorage.saveDataString(context, cpf, "cpfClient")
                     localStorage.saveDataString(context, name, "nameClient")
+                    localStorage.saveDataString(context, password, "passwordClient")
+                    localStorage.saveDataString(context, phone, "phoneClient")
+                    localStorage.saveDataString(context, email, "emailClient")
                     navController.navigate("home_screen")
 
                 } else {
@@ -346,37 +349,56 @@ fun ThirdSignupScreen(
 
                             CustomButton(
                                 onClick = {
-                                    storageRef = storageRef.child(System.currentTimeMillis().toString())
-                                    imageUri.let {
-                                        it.let {
-                                            storageRef.putFile(it!!.toUri()).addOnCompleteListener{task ->
-                                                if(task.isSuccessful){
+                                    if(imageUri == ""){
+                                        signup(
+                                            name!!,
+                                            cpf!!,
+                                            cep!!,
+                                            state!!,
+                                            city!!,
+                                            neighborhood!!,
+                                            street!!,
+                                            number!!,
+                                            email,
+                                            phone!!,
+                                            password,
+                                            confirmPassword,
+                                            ""
+                                        )
 
-                                                    storageRef.downloadUrl.addOnSuccessListener { uri ->
+                                    }else{
+                                        storageRef = storageRef.child(System.currentTimeMillis().toString())
+                                        imageUri.let {
+                                            it.let {
+                                                storageRef.putFile(it!!.toUri()).addOnCompleteListener{task ->
+                                                    if(task.isSuccessful){
 
-                                                        val map = HashMap<String, Any>()
-                                                        map["pic"] = uri.toString()
-                                                        imageUri = map.toString()
-                                                        fibaseFirestore.collection("images").add(map)
+                                                        storageRef.downloadUrl.addOnSuccessListener { uri ->
 
-                                                        signup(
-                                                            name!!,
-                                                            cpf!!,
-                                                            cep!!,
-                                                            state!!,
-                                                            city!!,
-                                                            neighborhood!!,
-                                                            street!!,
-                                                            number!!,
-                                                            email,
-                                                            phone!!,
-                                                            password,
-                                                            confirmPassword,
-                                                            imageUri!!.replace("{pic=", "").replace("}","")
-                                                        )
+                                                            val map = HashMap<String, Any>()
+                                                            map["pic"] = uri.toString()
+                                                            imageUri = map.toString()
+                                                            fibaseFirestore.collection("images").add(map)
+
+                                                            signup(
+                                                                name!!,
+                                                                cpf!!,
+                                                                cep!!,
+                                                                state!!,
+                                                                city!!,
+                                                                neighborhood!!,
+                                                                street!!,
+                                                                number!!,
+                                                                email,
+                                                                phone!!,
+                                                                password,
+                                                                confirmPassword,
+                                                                imageUri!!.replace("{pic=", "").replace("}","")
+                                                            )
+
+                                                        }
 
                                                     }
-
                                                 }
                                             }
                                         }

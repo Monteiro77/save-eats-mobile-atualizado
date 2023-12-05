@@ -130,4 +130,8 @@ object RetrofitFactory {
         return  retrofitFactory.create(EditProfileService::class.java)
     }
 
+    fun getRestaurantRate(): RestaurantService{
+        return  retrofitFactory.create(RestaurantService::class.java)
+    }
+
 }

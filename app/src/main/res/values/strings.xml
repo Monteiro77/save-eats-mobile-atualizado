@@ -72,4 +72,7 @@
     <string name="order_details">Order details</string>
     <string name="see_menu">See menu</string>
     <string name="details_orders">Order Details</string>
+    <string name="edit_profile">Edit profile</string>
+    <string name="save">save</string>
+    <string name="edited_with_sucess">edited with success</string>
 </resources>

@@ -422,7 +422,7 @@ fun RecipeScreen(
                         ) {
 
                             Text(
-                                text = methodOfPreparation!!.replace(".", ".\n"),
+                                text = methodOfPreparation!!.replace(".", ".\n\n"),
                                 fontSize = 18.sp,
                                 fontWeight = FontWeight.W500,
                                 color = Color(20, 58, 11)
