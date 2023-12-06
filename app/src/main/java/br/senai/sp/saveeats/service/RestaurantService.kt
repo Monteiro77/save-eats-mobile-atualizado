@@ -1,7 +1,8 @@
 package br.senai.sp.saveeats.service
 
-import br.senai.sp.saveeats.model.RatingRestaurantList
-import br.senai.sp.saveeats.model.Restaurant
+import br.senai.sp.saveeats.model.AddressRestaurantList
+import br.senai.sp.saveeats.model.AvaliationList
+import br.senai.sp.saveeats.model.HorarioDeFuncionamentoList
 import br.senai.sp.saveeats.model.RestaurantList
 import retrofit2.Call
 import retrofit2.Response
@@ -16,7 +17,13 @@ interface RestaurantService {
     suspend fun getRestaurantResponse(): Response<RestaurantList>
 
     @GET("/v1/saveeats/avaliacoes/restaurante/idRestaurante/{id}")
-    fun getRestaurantRate(@Path("id") id: Int): Call<RatingRestaurantList>
+    fun getRestaurantRate(@Path("id") id: Int): Call<AvaliationList>
+
+    @GET("/v1/saveeats/endereco/restaurante/id/{id}")
+    fun getAdressRestaurantByID(@Path("id") id: Int): Call<AddressRestaurantList>
+
+    @GET("/v1/saveeats/restaurante/dia-horario-funcionamento/idRestaurante/{id}")
+    fun getHorarioDeFuncionamentoByIdRestaurante(@Path("id") id: Int): Call<HorarioDeFuncionamentoList>
 
 
 

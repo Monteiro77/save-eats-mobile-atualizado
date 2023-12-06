@@ -138,7 +138,10 @@ fun ProductsRestaurantScreen(navController: NavController, localStorage: Storage
                     text = "Restaurant profile",
                     fontSize = 12.sp,
                     fontWeight = FontWeight.W600,
-                    color = Color(41, 95, 27)
+                    color = Color(41, 95, 27),
+                    modifier = Modifier.clickable {
+                        navController.navigate("restaurant_profile_screen")
+                    }
                 )
 
             }

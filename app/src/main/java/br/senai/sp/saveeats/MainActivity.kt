@@ -43,7 +43,7 @@ class MainActivity : ComponentActivity() {
 
                 NavHost(
                     navController = navController,
-                    startDestination = "restaurant_profile"
+                    startDestination = "login_screen"
                 ) {
 
                     composable("splash_screen") {
@@ -137,9 +137,13 @@ class MainActivity : ComponentActivity() {
                     composable("avaliation_screen") {
                         AvaliationScreen(navController = navController , lifecycleScope)
                     }
-                    composable("restaurant_profile") {
+                    composable("restaurant_profile_screen") {
                         RestaurantProfile(navController = navController , Storage())
                     }
+
+
+
+
 
 
 

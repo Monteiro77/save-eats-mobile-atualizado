@@ -29,7 +29,7 @@ object RetrofitFactory {
 
     private const val baseURL2 = "https://save-eats.azurewebsites.net/"
 
-    private const val baseURL3 = "http://10.107.144.21:8080/"
+    private const val baseURL3 = "http://10.107.144.6:8080/"
 
     private var retrofitFactory = Retrofit
         .Builder()
@@ -133,5 +133,14 @@ object RetrofitFactory {
     fun getRestaurantRate(): RestaurantService{
         return  retrofitFactory.create(RestaurantService::class.java)
     }
+    fun getAdressByIdRestaurant() : RestaurantService{
+        return  retrofitFactory.create(RestaurantService::class.java)
+    }
+
+    fun getHorarioDeFuncionamentoByIdRestaurante() : RestaurantService{
+        return  retrofitFactory.create(RestaurantService::class.java)
+    }
+
+
 
 }
