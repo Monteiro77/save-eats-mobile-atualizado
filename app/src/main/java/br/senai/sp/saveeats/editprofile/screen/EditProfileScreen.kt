@@ -189,6 +189,7 @@ fun EditProfileScreen(
 
             if (response.isSuccessful) {
                 Toast.makeText(context, "Edited com success", Toast.LENGTH_SHORT).show()
+                navController.navigate("profile_screen")
                 localStorage.saveDataString(context, photo, "photoClient")
             } else {
                 Log.e("ERROR", "editProfile: $response")

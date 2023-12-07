@@ -1,4 +1,4 @@
-package br.senai.sp.saveeats.components
+package br.senai.sp.saveeats.historic.component
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,18 +21,40 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.saveeats.ui.theme.fontFamily
+
 @Composable
-fun Header(
+fun HeaderHistoric(
+    text: String,
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(25.dp),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+
+        Text(
+            text = text.uppercase(),
+            fontSize = 18.sp,
+            fontFamily = fontFamily,
+            fontWeight = FontWeight.W400
+        )
+
+    }
+
+}
+
+@Composable
+fun HeaderOrderDetails(
     text: String,
     navController: NavController
 ) {
-
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
-
         Box(
-            modifier = Modifier.offset(x = 30.dp, y = 38.dp)
+            modifier = Modifier.offset(x = 30.dp, y = 24.dp)
         ) {
 
             IconButton(
@@ -50,11 +72,10 @@ fun Header(
             }
 
         }
-
         Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .height(60.dp),
+                .height(25.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
@@ -67,7 +88,7 @@ fun Header(
             )
 
         }
-
     }
 
 }
+

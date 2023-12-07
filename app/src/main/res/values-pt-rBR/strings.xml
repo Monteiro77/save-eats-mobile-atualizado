@@ -75,5 +75,7 @@
     <string name="edit_profile">Editar perfil</string>
     <string name="save">Salvar</string>
     <string name="edited_with_sucess">Editado com sucesso</string>
+    <string name="orders_historics">Historico de pedidos</string>
+    <string name="orders_details">Detalhes do Pedido</string>
 
 </resources>

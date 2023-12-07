@@ -27,7 +27,7 @@ object RetrofitFactory {
 
     private const val baseViaCepURL = "https://viacep.com.br/"
 
-    private const val baseURL2 = "https://save-eats.azurewebsites.net/"
+    private const val baseURL2 = "https://save-eats-backend.azurewebsites.net/"
 
     private const val baseURL3 = "http://10.107.144.6:8080/"
 

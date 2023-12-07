@@ -75,4 +75,6 @@
     <string name="edit_profile">Edit profile</string>
     <string name="save">save</string>
     <string name="edited_with_sucess">edited with success</string>
+    <string name="orders_historics">Orders Historic</string>
+    <string name="orders_details">Orders details</string>
 </resources>

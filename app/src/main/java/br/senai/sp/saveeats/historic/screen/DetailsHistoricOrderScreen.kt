@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import br.senai.sp.saveeats.R
 import br.senai.sp.saveeats.Storage
+import br.senai.sp.saveeats.components.Header
 import br.senai.sp.saveeats.model.OrderInformation
 import br.senai.sp.saveeats.model.OrderList
 import br.senai.sp.saveeats.model.ProductOrderList
@@ -64,6 +65,7 @@ fun DetalhesPedidoHistoricoScreen(
 
     val verifierAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.verified_animation))
 
+    val canceledAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.canceled_animation))
 
     val context = LocalContext.current
 
@@ -121,37 +123,7 @@ fun DetalhesPedidoHistoricoScreen(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceAround
-        ) {
-
-            Icon(
-                painter = painterResource(id = R.drawable.arrow),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(20.dp)
-                    .clickable {
-                        navController.popBackStack()
-                    }
-                    .absoluteOffset(x = (-30).dp),
-                tint = Color(20, 58, 11)
-
-            )
-
-            Spacer(modifier = Modifier.width(50.dp))
-
-            Text(
-                text = stringResource(id = R.string.details_orders),
-                fontSize = 25.sp,
-                color = Color(20, 58, 11),
-                modifier = Modifier.absoluteOffset(x = (-80).dp)
-            )
-
-        }
-
+        Header(text = stringResource(id = R.string.orders_details), navController = navController)
         Spacer(modifier = Modifier.height(20.dp))
 
         if (status) {
@@ -246,14 +218,24 @@ fun DetalhesPedidoHistoricoScreen(
                             )
 
 
-                        } else {
+                        } else if(detalhesPedido[0].status_pedido == "Pedido cancelado" || detalhesPedido[0].status_pedido == "Cancelado") {
+
+                            LottieAnimation(
+                                composition = canceledAnimation,
+                                modifier = Modifier.size(25.dp),
+                                iterations = LottieConstants.IterateForever
+                            )
+                        }else {
+
                             LottieAnimation(
                                 composition = waitingAnimation,
                                 modifier = Modifier.size(20.dp),
                                 iterations = LottieConstants.IterateForever
                             )
 
-                        }
+
+
+                    }
 
                         Spacer(modifier = Modifier.width(6.dp))
 
@@ -426,23 +408,6 @@ fun DetalhesPedidoHistoricoScreen(
                         fontSize = 12.sp
                     )
 
-
-
-                    Row {
-                        Icon(
-                            painter = painterResource(id = R.drawable.baseline_pix_24),
-                            contentDescription = "",
-                            tint = Color(22, 77, 20, 255),
-                            modifier = Modifier.size(20.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(5.dp))
-
-                        Text(
-                            text = "Pix",
-                        )
-                    }
-
                 }
 
 
@@ -462,82 +427,16 @@ fun DetalhesPedidoHistoricoScreen(
                     fontSize = 12.sp
                 )
 
-                Spacer(modifier = Modifier.height(5.dp))
+//                Spacer(modifier = Modifier.height(5.dp))
+//
+//                Text(
+//                    text = "${
+//                        localStorage.readDataString(context, "cidade_cliente").toString()
+//                    } ${localStorage.readDataString(context, "estado_cliente").toString()}",
+//                    color = Color(104, 104, 104),
+//                    fontSize = 12.sp
+//                )
 
-                Text(
-                    text = "${
-                        localStorage.readDataString(context, "cidade_cliente").toString()
-                    } ${localStorage.readDataString(context, "estado_cliente").toString()}",
-                    color = Color(104, 104, 104),
-                    fontSize = 12.sp
-                )
-
-                Spacer(modifier = Modifier.height(15.dp))
-
-
-
-                Text(
-                    text = "Avaliação",
-                    fontSize = 20.sp,
-                    color = Color(41, 95, 27)
-                )
-
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-
-                    Row {
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = "",
-                            modifier = Modifier.size(20.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(3.dp))
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = "",
-                            modifier = Modifier.size(20.dp)
-                        )
-
-                        Spacer(modifier = Modifier.width(3.dp))
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = "",
-                            modifier = Modifier.size(20.dp)
-
-                        )
-
-                        Spacer(modifier = Modifier.width(3.dp))
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = "",
-                            modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(modifier = Modifier.width(3.dp))
-
-                        Icon(
-                            painter = painterResource(id = R.drawable.star),
-                            contentDescription = "",
-                            modifier = Modifier.size(20.dp)
-                        )
-                    }
-
-
-
-                    Text(
-                        text = "Enviar",
-                        fontSize = 15.sp,
-                        color = Color(41, 95, 27)
-                    )
-                }
 
 
             }

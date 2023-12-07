@@ -74,7 +74,7 @@ fun ProfileScreen(navController: NavController, localStorage: Storage) {
                         .size(55.dp)
                         .clip(shape = CircleShape),
                     model = photo,
-                    contentScale = ContentScale.FillHeight,
+                    contentScale = ContentScale.Crop,
                     contentDescription = "Image Client"
                 )
 

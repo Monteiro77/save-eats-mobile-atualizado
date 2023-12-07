@@ -2,14 +2,18 @@ package br.senai.sp.saveeats.historic.screen
 
 import androidx.compose.runtime.Composable
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.absoluteOffset
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -22,6 +26,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -40,6 +45,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import br.senai.sp.saveeats.R
 import br.senai.sp.saveeats.Storage
+import br.senai.sp.saveeats.components.Header
+import br.senai.sp.saveeats.historic.component.HeaderHistoric
 import br.senai.sp.saveeats.model.Historic
 import br.senai.sp.saveeats.model.HistoricList
 import br.senai.sp.saveeats.model.RetrofitFactory
@@ -60,6 +67,8 @@ fun HistoricScreen(
     val waitingAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.waiting_animation))
 
     val verifierAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.verified_animation))
+
+    val canceledAnimation by rememberLottieComposition(spec = LottieCompositionSpec.RawRes(R.raw.canceled_animation))
 
 
     val context = LocalContext.current
@@ -82,7 +91,7 @@ fun HistoricScreen(
             call: Call<HistoricList>,
             response: Response<HistoricList>
         ) {
-                listOrders = response.body()!!.detalhes_do_pedido_do_cliente
+            listOrders = response.body()!!.detalhes_do_pedido_do_cliente
         }
 
         override fun onFailure(
@@ -97,58 +106,43 @@ fun HistoricScreen(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .fillMaxSize()
             .padding(30.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
 
-        Text(
-            text = "Histórico de Pedidos",
-            fontSize = 22.sp
-
-        )
-
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(Color(20, 58, 11))
-                .height(2.dp),
+        HeaderHistoric(text = stringResource(id = R.string.orders_historics))
 
 
-            ) {
-
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-
-        if(listOrders.isNullOrEmpty()){
+        if (listOrders.isNullOrEmpty()) {
             Column {
                 Text(text = "SEM AVALIAÇÕES")
             }
-        }else{
+        } else {
 
             LazyVerticalStaggeredGrid(
                 columns = StaggeredGridCells.Fixed(1),
-                verticalItemSpacing = 15.dp
+                verticalItemSpacing = 15.dp,
+                modifier = Modifier.fillMaxSize()
             ) {
 
                 items(listOrders) {
 
-                    Card(
+                    Surface(
                         modifier = Modifier
                             .width(350.dp)
-                            .height(170.dp)
+                            .height(210.dp)
+                            .offset(y = 12.dp)
                             .shadow(
                                 elevation = 8.dp,
                                 spotColor = Color(0xFF000000),
                                 ambientColor = Color(0xFF000000),
-                                shape = RoundedCornerShape(30.dp)
-                            ), colors = CardDefaults.cardColors(
-                            Color(212, 227, 204)
-                        ), shape = RoundedCornerShape(30.dp)
+                                shape = RoundedCornerShape(5)
+                            ),
+//                            .border((0.5).dp, Color.Black, RoundedCornerShape(5)),
+
+                        shape = RoundedCornerShape(2)
+
 
                     ) {
                         Column(
@@ -160,12 +154,12 @@ fun HistoricScreen(
 
                             Row(
                                 modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(horizontal = 10.dp)
+                                    .fillMaxWidth(),
+                                horizontalArrangement = Arrangement.End
                             ) {
                                 Text(
                                     text = it.data_pedido,
-                                    color = Color(104, 104, 104)
+                                    color = Color(46, 46, 46, 255)
                                 )
                             }
                             Row(
@@ -196,9 +190,9 @@ fun HistoricScreen(
 
                             Row(
                                 modifier = Modifier
-                                    .height(2.dp)
-                                    .width(300.dp)
-                                    .background(Color(153, 153, 153, 180))
+                                    .height(1.dp)
+                                    .width(330.dp)
+                                    .background(Color(58, 57, 57, 180))
                                     .clip(CircleShape)
 
                             ) {}
@@ -214,7 +208,6 @@ fun HistoricScreen(
                                     LottieAnimation(
                                         composition = verifierAnimation,
                                         modifier = Modifier.size(20.dp),
-                                        iterations = LottieConstants.IterateForever
                                     )
 
                                     Spacer(modifier = Modifier.width(4.dp))
@@ -225,21 +218,27 @@ fun HistoricScreen(
                                         fontSize = 10.sp
                                     )
 
-                                    Spacer(modifier = Modifier.width(4.dp))
+
+                                } else if (it.status_pedido == "Pedido cancelado" || it.status_pedido == "Cancelado") {
+
+                                    LottieAnimation(
+                                        composition = canceledAnimation,
+                                        speed = 0.5f,
+                                        modifier = Modifier.size(25.dp),
+                                    )
+
 
                                     Text(
-                                        text = it.numero_pedido,
+                                        text = it.status_pedido,
                                         color = Color(104, 104, 104),
                                         fontSize = 10.sp
                                     )
 
+
                                 } else {
-
-
                                     LottieAnimation(
                                         composition = waitingAnimation,
                                         modifier = Modifier.size(25.dp),
-                                        iterations = LottieConstants.IterateForever
                                     )
 
 
@@ -248,18 +247,16 @@ fun HistoricScreen(
                                         color = Color(104, 104, 104),
                                         fontSize = 10.sp
                                     )
-
-                                    Spacer(modifier = Modifier.width(4.dp))
-
-                                    Text(
-                                        text = it.numero_pedido,
-                                        color = Color(104, 104, 104),
-                                        fontSize = 10.sp
-                                    )
-
-
                                 }
                             }
+
+
+                            Text(
+                                text = ("Numero pedido: ${it.numero_pedido}"),
+                                color = Color(104, 104, 104),
+                                fontSize = 10.sp
+                            )
+                            Spacer(modifier = Modifier.height(20.dp))
 
                             Button(
                                 onClick = {
@@ -289,8 +286,8 @@ fun HistoricScreen(
 //                                localStorage.saveDataString(context, it.cidade_cliente, "cidade_cliente")
                                 },
                                 modifier = Modifier
-                                    .width(120.dp)
-                                    .height(30.dp),
+                                    .height(30.dp)
+                                    .width(160.dp),
                                 colors = ButtonDefaults.buttonColors(
                                     Color(72, 138, 39)
                                 )
@@ -314,10 +311,9 @@ fun HistoricScreen(
 
                         }
                     }
-                }
 
+                }
             }
         }
     }
-
 }
